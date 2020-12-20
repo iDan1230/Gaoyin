@@ -1,0 +1,6 @@
+include ':login'
+include ':home'
+include ':mine'
+include ':frame'
+include ':app'
+rootProject.name = "Gaoyin"

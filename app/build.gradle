@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+}
+apply from: '../dependencies.gradle'
+
+android {
+    defaultConfig {
+        applicationId "com.gaoyin.app"
+    }
+}
+
+dependencies {
+    implementation project(path: ':login')
+    implementation project(path: ':home')
+    implementation project(path: ':mine')
+}
