@@ -11,7 +11,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : BaseViewMod
 
     val account = ObservableField<String>("11111111")
 
-    val password = ObservableField<String>("2222222")
+    val password = ObservableField<String>("22222222")
 
     fun onLogin() {
         ARouter.getInstance().build("/main/main")
