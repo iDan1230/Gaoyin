@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/dialog_bg"
+        android:gravity="center"
+        android:minHeight="@dimen/dp_100"
+        android:orientation="vertical"
+        android:translationZ="@dimen/dp_2">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:progressTint="@color/c_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="loading.."
+            android:textColor="@color/c_333" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_ract_red"
+            android:text="确定"
+            android:textColor="@color/c_fff"
+            android:textSize="12sp"
+            android:translationZ="@dimen/dp_5"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

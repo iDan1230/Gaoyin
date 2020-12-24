@@ -3,4 +3,6 @@ apply from: '../dependencies.gradle'
 
 android {}
 
-dependencies {}
+dependencies {
+    implementation project(path: ':base')
+}
