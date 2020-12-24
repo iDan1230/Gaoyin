@@ -11,6 +11,6 @@ android {
 
 dependencies {
     implementation project(path: ':login')
-    implementation project(path: ':home')
+    implementation project(path: ':main')
     implementation project(path: ':mine')
 }

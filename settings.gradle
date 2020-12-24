@@ -1,6 +1,6 @@
 include ':login'
-include ':home'
+include ':main'
 include ':mine'
-include ':frame'
+include ':base'
 include ':app'
 rootProject.name = "Gaoyin"
