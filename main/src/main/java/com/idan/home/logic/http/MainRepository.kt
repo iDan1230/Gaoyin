@@ -1,5 +1,6 @@
 package com.idan.home.logic.http
 
+import com.idan.frame.model.PageInfo
 import com.idan.home.logic.model.Message
 
 /**
@@ -9,6 +10,6 @@ import com.idan.home.logic.model.Message
  */
 class MainRepository(private val loginService: MainService) {
 
-    suspend fun queryMessage(): ArrayList<Message> = loginService.queryMessages(199916, 1, 20).rows
+    suspend fun queryMessage(userId:Long,page:Int): PageInfo<Message> = loginService.queryMessages(userId, page, 5)
 
 }

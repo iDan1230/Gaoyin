@@ -50,21 +50,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = pagingAdapter
             lifecycleScope.launch {
-                mVM.loadData().collectLatest {
+                mVM.loadData(199916).collectLatest {
                     pagingAdapter.submitData(it)
                 }
             }
         }
-
         mDb.title.setTitle("主页面")
     }
 
     private var pagingAdapter =
         BasePagingAdapter<HomeItemTestBinding, Message>(R.layout.home_item_test) { db, item, position, adapter ->
             db.item = item
-            "${item.title}".e()
             db.root.setOnClickListener {
-                item.title = "随便修改一个值$position"
+                item.compel = 1
                 adapter.notifyItemChanged(position)
             }
         }

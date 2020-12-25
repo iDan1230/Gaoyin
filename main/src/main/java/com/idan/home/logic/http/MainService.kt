@@ -1,7 +1,7 @@
 package com.idan.home.logic.http
 
+import com.idan.frame.model.PageInfo
 import com.idan.home.logic.model.Message
-import com.idan.home.logic.model.PageInfo
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query

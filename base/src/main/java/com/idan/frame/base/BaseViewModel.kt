@@ -1,13 +1,11 @@
 package com.idan.frame.base
 
+import android.graphics.pdf.PdfDocument
 import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.idan.frame.http.handleExcption
-import com.idan.frame.model.Failed
-import com.idan.frame.model.LoadState
-import com.idan.frame.model.State
-import com.idan.frame.model.Success
+import com.idan.frame.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -38,7 +36,7 @@ open class BaseViewModel : ViewModel() {
     /**
      * paging加载方式
      */
-    fun <D : Any> flowData(queryPage: suspend (Int) -> List<D>) =
+    fun <D : Any> flowData(queryPage: suspend (Int) -> PageInfo<D>) =
         Pager(PagingConfig(pageSize = 1)) {
             BaseDataSource { page -> queryPage.invoke(page) }
         }.flow

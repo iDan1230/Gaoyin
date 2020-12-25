@@ -6,10 +6,11 @@ import com.idan.home.logic.http.MainRepository
 
 class MainViewModel(private val mainRepository: MainRepository) : BaseViewModel() {
 
-    fun clear(){
+    fun clear() {
         "clear".show()
     }
-    fun loadData() = flowData {
-        mainRepository.queryMessage()
+
+    fun loadData(userId:Long) = flowData {
+        mainRepository.queryMessage(userId, it)
     }
 }
