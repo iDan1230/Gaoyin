@@ -1,12 +1,12 @@
 package com.idan.frame.http
 
 import androidx.lifecycle.liveData
+import com.alibaba.fastjson.JSON
+import com.idan.frame.ktx.e
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import retrofit2.*
+import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
@@ -54,4 +54,25 @@ suspend fun <T> Call<T>.await(): T {
             }
         })
     }
+}
+
+fun handleExcption(e: Throwable): String {
+    var errorString = e.message ?: "请求失败"
+    try {
+        e.let {
+            if (e.message?.startsWith("Bad Request")!! || e.message?.startsWith("HTTP 400 Bad Request")!!) {
+                (e as HttpException).response()?.apply {
+                    var jsonObject = JSON.parseObject(errorBody()?.string())
+                    jsonObject.toJSONString().e()
+                    if (jsonObject.containsKey("msg")) {
+                        errorString = jsonObject.getString("msg")
+                    }
+                }
+            }
+        }
+    } catch (e: Exception) {
+        errorString = e.message ?: "解析异常"
+    }
+    errorString.e()
+    return errorString
 }

@@ -11,10 +11,22 @@ import com.idan.frame.databinding.ToolbarLayoutBinding
 class Titilebar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+    private var mDB: ToolbarLayoutBinding? = null
 
     init {
-       val db:ToolbarLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.toolbar_layout,this,true)
-        db.tb ="titleBar"
-//        addView(db.clToolbar)
+        val db: ToolbarLayoutBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.toolbar_layout,
+            this,
+            true
+        )
+        db.tb = "titleBar"
+        mDB = db
+    }
+
+    fun setTitle(title: String) {
+        mDB?.let {
+            it.tb = title
+        }
     }
 }

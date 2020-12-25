@@ -1,6 +1,10 @@
 package com.idan.login.ui.login
 
+import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.idan.frame.ID
+import com.idan.frame.TITLE
 import com.idan.frame.base.BaseActivity
 import com.idan.login.R
 import com.idan.login.databinding.ActivityLoginBinding
@@ -20,5 +24,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding,LoginViewModel>() {
 
     override fun initView() {
         mDb.vm = mVM
+        mVM.userLiveData.observe(this, Observer {
+            it.login_failure_msg?.apply {
+                failedLoading(this)
+                return@Observer
+            }
+            ARouter.getInstance().build("/main/main")
+                .withLong(ID,10010L)
+                .withString(TITLE,"TEST_TITLE")
+                .navigation()
+        })
     }
 }

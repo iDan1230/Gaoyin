@@ -15,36 +15,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
 
-        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--            android:id="@+id/cl_toolbar"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--            app:layout_constraintRight_toRightOf="parent"-->
-        <!--            android:background="@color/c_main"-->
-        <!--            >-->
-        <!--            <androidx.appcompat.widget.Toolbar-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:gravity="bottom"-->
-        <!--                android:fitsSystemWindows="true"-->
-        <!--                app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--                app:layout_constraintRight_toRightOf="parent"-->
-        <!--                app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--                <TextView-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="@dimen/dp_48"-->
-        <!--                    android:gravity="center"-->
-        <!--                    android:layout_gravity="center"-->
-        <!--                    android:textColor="@color/c_fff"-->
-        <!--                    android:textSize="@dimen/sp_16"-->
-        <!--                    android:text="标题" />-->
-
-        <!--            </androidx.appcompat.widget.Toolbar>-->
-        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
         <com.idan.frame.widget.Titilebar
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -61,13 +31,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-
         <com.google.android.material.button.MaterialButton
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
             android:layout_margin="@dimen/dp_15"
             android:enabled="true"
-            android:onClick="@{()->vm.add()}"
+            android:onClick="@{()->vm.clear()}"
             app:cornerRadius="@dimen/dp_60"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

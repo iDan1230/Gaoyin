@@ -67,6 +67,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
     //endregion
 
+    //region paging
+    implementation 'androidx.paging:paging-runtime:3.0.0-alpha07'
+    implementation 'androidx.paging:paging-common:3.0.0-alpha07'
+    //endregion
+
     //region room
     implementation 'androidx.room:room-runtime:2.2.5'
     //endregion

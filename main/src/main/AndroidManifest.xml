@@ -3,7 +3,8 @@
     package="com.idan.home">
 
     <application>
-        <activity android:name=".ui.main.MainActivity"></activity>
+        <activity android:name=".ui.paging.PagingActivity"></activity>
+        <activity android:name=".ui.main.MainActivity" />
     </application>
 
 </manifest>

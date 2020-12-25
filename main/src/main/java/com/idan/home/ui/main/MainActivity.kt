@@ -1,24 +1,30 @@
 package com.idan.home.ui.main
 
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.idan.frame.ID
 import com.idan.frame.TITLE
 import com.idan.frame.base.BaseActivity
-import com.idan.frame.base.BaseAdapter
+import com.idan.frame.base.BasePagingAdapter
 import com.idan.frame.ktx.e
 import com.idan.home.R
 import com.idan.home.databinding.ActivityMainBinding
-import com.idan.home.databinding.HomeItemTestListLayoutBinding
+import com.idan.home.databinding.HomeItemTestBinding
+import com.idan.home.logic.model.Message
 import com.idan.home.logic.model.Test
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ * @Author yangzhidan
+ * @Date   2020/12/25
+ * @Remark 主页面
+ */
 @Route(path = "/main/main")
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
@@ -40,19 +46,26 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mDb.vm = mVM
         "$title ------ $id".e()
 
-        mVM.tests.observe(this, Observer {
-            datas.addAll(it)
-            mDb.root.recycler.adapter?.notifyDataSetChanged()
-        })
-
         mDb.root.recycler.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = object : BaseAdapter<HomeItemTestListLayoutBinding, Test>(datas) {
-                override fun layoutRes(): Int = R.layout.home_item_test_list_layout
-                override fun bindItem(db: HomeItemTestListLayoutBinding, item: Test) {
-                    db.item = item
+            adapter = pagingAdapter
+            lifecycleScope.launch {
+                mVM.loadData().collectLatest {
+                    pagingAdapter.submitData(it)
                 }
             }
         }
+
+        mDb.title.setTitle("主页面")
     }
+
+    private var pagingAdapter =
+        BasePagingAdapter<HomeItemTestBinding, Message>(R.layout.home_item_test) { db, item, position, adapter ->
+            db.item = item
+            "${item.title}".e()
+            db.root.setOnClickListener {
+                item.title = "随便修改一个值$position"
+                adapter.notifyItemChanged(position)
+            }
+        }
 }
