@@ -23,8 +23,10 @@ fun Any.e() {
     Log.e("ERROR ========> ", "$this")
 }
 
-fun Any.show() {
-    Toast.makeText(AppGlobal.getContext(), "$this", Toast.LENGTH_SHORT).show()
+fun Any?.show() {
+    this?.let {
+        Toast.makeText(AppGlobal.getContext(), "$this", Toast.LENGTH_SHORT).show()
+    }
 }
 
 /**

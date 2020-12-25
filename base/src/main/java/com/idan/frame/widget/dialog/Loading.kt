@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.dialog_loading.view.*
  * User:yangzhidan
  * Remark:加载框，待完善。需要增加显示错误时的样式
  */
-class Loading(val defaultContent: String? = null) : DialogFragment() {
+class Loading(private val defaultContent: String? = null) : DialogFragment() {
 
     private var root: View? = null
 

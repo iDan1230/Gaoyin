@@ -2,6 +2,7 @@ package com.idan.home.ui.main
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -9,7 +10,9 @@ import com.idan.frame.ID
 import com.idan.frame.TITLE
 import com.idan.frame.base.BaseActivity
 import com.idan.frame.base.BasePagingAdapter
+import com.idan.frame.base.FooterAdapter
 import com.idan.frame.ktx.e
+import com.idan.frame.ktx.show
 import com.idan.home.R
 import com.idan.home.databinding.ActivityMainBinding
 import com.idan.home.databinding.HomeItemTestBinding
@@ -47,14 +50,37 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         "$title ------ $id".e()
 
         mDb.root.recycler.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = pagingAdapter
+//            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = pagingAdapter.withLoadStateFooter(FooterAdapter(pagingAdapter))
+
             lifecycleScope.launch {
                 mVM.loadData(199916).collectLatest {
                     pagingAdapter.submitData(it)
                 }
             }
+            //这里可以根据状态对UI进行操作
+            pagingAdapter.addLoadStateListener { loadState ->
+                if (loadState.refresh is LoadState.Loading) {
+                    //加载中
+                } else {
+                    //其他状态
+                    val error = when {
+                        loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                        loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                        loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                        else -> null
+                    }
+
+                    error?.let {
+                        it.error.message.show()
+                    }
+                }
+            }
         }
+        //刷新
+//        pagingAdapter.refresh()
+        //重试
+//        pagingAdapter.retry()
         mDb.title.setTitle("主页面")
     }
 

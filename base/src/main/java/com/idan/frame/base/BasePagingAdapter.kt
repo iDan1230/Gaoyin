@@ -17,9 +17,9 @@ import com.idan.frame.ktx.e
  * @Remark 列表适配器基类
  * @param DB:根据布局资源生成的
  */
-class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
+class BasePagingAdapter<DB : ViewDataBinding, D : Any> (
     @LayoutRes private val itemRes: Int,
-    val onBindItem: (DB, D,Int, adater: BasePagingAdapter<DB, D>) -> Unit
+    val onBindItem: (DB, D,Int, adater: BasePagingAdapter<*,*>) -> Unit
 ) :
     PagingDataAdapter<D, PagingHolder>(object : DiffUtil.ItemCallback<D>() {
         override fun areItemsTheSame(oldItem: D, newItem: D): Boolean {

@@ -15,7 +15,8 @@ import kotlin.coroutines.suspendCoroutine
 
 object ServiceCreator {
 
-    private const val BASE_URL = "http://10.0.213.214:9100/"
+//    private const val BASE_URL = "http://10.0.213.214:9100/"
+    private const val BASE_URL = "http://182.140.240.104:9001/"
 
     private val okHttpClient = OkHttpClient.Builder()
         .readTimeout(10 * 1000, TimeUnit.MILLISECONDS)
