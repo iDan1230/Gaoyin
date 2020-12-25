@@ -47,12 +47,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
         mDb.root.recycler.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = object :BaseAdapter<Test>(datas){
-                override fun itemLayoutRes(): Int = R.layout.home_item_test_list_layout
-
-                override fun bindItem(view: View, item: Test) {
-                   val iDB = DataBindingUtil.getBinding<HomeItemTestListLayoutBinding>(view)
-                    iDB?.item = item
+            adapter = object : BaseAdapter<HomeItemTestListLayoutBinding, Test>(datas) {
+                override fun layoutRes(): Int = R.layout.home_item_test_list_layout
+                override fun bindItem(db: HomeItemTestListLayoutBinding, item: Test) {
+                    db.item = item
                 }
             }
         }

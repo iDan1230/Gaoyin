@@ -6,29 +6,33 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 
-abstract class BaseAdapter<D>(var datas: MutableList<D>) : RecyclerView.Adapter<ViewHolder<D>>() {
+abstract class BaseAdapter<DB : ViewDataBinding, D>(var datas: MutableList<D>) :
+    RecyclerView.Adapter<ViewHolder<D>>() {
 
     override fun getItemCount(): Int = datas.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder< D> {
-       val mDb =  DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context),itemLayoutRes(),parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<D> {
+        val mDb = DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(parent.context),
+            layoutRes(),
+            parent,
+            false
+        )
         return ViewHolder(mDb)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder< D>, position: Int) {
-//        holder.bind(datas[position]){
-//            t,d->
-//            bindData(t,d)
-//        }
-
-        bindItem(holder.itemView,datas[position])
+    override fun onBindViewHolder(holder: ViewHolder<D>, position: Int) {
+        val db = DataBindingUtil.getBinding<DB>(holder.itemView)
+        db?.let {
+            bindItem(it, datas[position])
+        }
+//        bindItem(holder.itemView,datas[position])
     }
 
-    abstract fun itemLayoutRes():Int
+    abstract fun layoutRes(): Int
 
-    abstract fun bindItem(view:View,item: D)
+    abstract fun bindItem(mDB: DB, item: D)
 
 }
 
