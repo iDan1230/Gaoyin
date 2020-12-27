@@ -1,6 +1,8 @@
 package com.idan.home.logic.http
 
 import com.idan.frame.model.PageInfo
+import com.idan.home.logic.model.Albums
+import com.idan.home.logic.model.Category
 import com.idan.home.logic.model.Message
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -15,15 +17,13 @@ interface MainService {
         @Query("rows") rows: Int
     ): PageInfo<Message>
 
-
-    @POST("/SSSS/register")
-    fun register(@QueryMap map: MutableMap<String, String>): String
-
-    @POST("/SSSSS/login")
-    fun login(@Query("account") account: String, @Query("password") password: String): String
-
-    @POST("/SSSS/queryUserInfo")
-    fun queryUser()
+    /**
+     * 类型列表
+     */
+    @GET("/categories/list")
+    suspend fun queryCategories(@QueryMap map: MutableMap<String, String>): MutableList<Category>
 
 
+    @GET("/v2/albums/list")
+    suspend fun queryAlbumsList(@QueryMap params:MutableMap<String,String>): PageInfo<Albums>
 }

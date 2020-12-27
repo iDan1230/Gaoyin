@@ -6,6 +6,7 @@ import com.idan.frame.ktx.e
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
@@ -16,7 +17,8 @@ import kotlin.coroutines.suspendCoroutine
 object ServiceCreator {
 
 //    private const val BASE_URL = "http://10.0.213.214:9100/"
-    private const val BASE_URL = "http://182.140.240.104:9001/"
+//    private const val BASE_URL = "http://182.140.240.104:9001/"
+    private const val BASE_URL = "https://api.ximalaya.com/"
 
     private val okHttpClient = OkHttpClient.Builder()
         .readTimeout(10 * 1000, TimeUnit.MILLISECONDS)
@@ -26,7 +28,8 @@ object ServiceCreator {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addConverterFactory(ApiGsonConverterFactory.create())
+//        .addConverterFactory(ApiGsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
 

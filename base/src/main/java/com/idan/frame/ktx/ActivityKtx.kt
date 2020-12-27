@@ -19,8 +19,9 @@ fun Any.d() {
     Log.d("DEBUG", "$this")
 }
 
-fun Any.e() {
-    Log.e("ERROR ========> ", "$this")
+fun Any?.e(tag: String? = null) {
+
+    Log.e(tag ?: "ERROR ========> ", "$this")
 }
 
 fun Any?.show() {

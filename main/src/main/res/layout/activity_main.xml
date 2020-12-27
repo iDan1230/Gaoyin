@@ -15,13 +15,18 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
 
-        <com.idan.frame.widget.Titilebar
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
+            android:background="@color/c_main"
+            android:fitsSystemWindows="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@color/c_fff"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/c_fff" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -32,7 +37,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/tab" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="@dimen/dp_60"

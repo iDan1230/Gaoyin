@@ -3,7 +3,6 @@ package com.idan.login.logic.http
 import com.idan.login.logic.pojo.User
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 
 interface LoginService {
 
@@ -13,9 +12,5 @@ interface LoginService {
             "sysCode"
         ) sysCode: String = "51"
     ): User
-
-    @POST("/SSSS/queryUserInfo")
-    fun queryUser()
-
 
 }

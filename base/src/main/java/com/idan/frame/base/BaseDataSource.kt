@@ -17,7 +17,7 @@ class BaseDataSource<D : Any>(val queryPage: suspend (Int) -> PageInfo<D>) :
             "11111".e()
             val info = queryPage.invoke(currentPage)
             "11112".e()
-            val nextPage = if (info.total > currentPage) {
+            val nextPage = if (info.total_page > currentPage) {
                 currentPage + 1
             } else {
                 null

@@ -20,6 +20,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonToken
+import com.idan.frame.ktx.e
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import java.io.IOException
