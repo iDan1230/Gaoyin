@@ -46,16 +46,13 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
         onAttach?.let {
             val grid = recyclerView.layoutManager
             if (grid is GridLayoutManager) {
+                val spanCount = grid.spanCount
                 grid.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//                    override fun getSpanSize(position: Int): Int {
-//                        return 1
-//                    }
-
                     override fun getSpanSize(position: Int): Int {
-                        return if (position < itemCount) {
-                            onAttach.invoke(getItem(position))
-                        } else {
-                            1
+                        return when {
+                            position == itemCount -> spanCount //配置footer之后，footer的位置比数据源大一
+                            position < itemCount -> onAttach.invoke(getItem(position))
+                            else -> 1
                         }
                     }
                 }
