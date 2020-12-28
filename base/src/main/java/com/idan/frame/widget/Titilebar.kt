@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.idan.frame.R
 import com.idan.frame.databinding.ToolbarLayoutBinding
@@ -28,5 +29,10 @@ class Titilebar @JvmOverloads constructor(
         mDB?.let {
             it.tb = title
         }
+    }
+
+    @BindingAdapter("title")
+    fun title(titleBar: Titilebar, title: String) {
+        mDB?.tb = title
     }
 }

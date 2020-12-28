@@ -10,6 +10,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.idan.frame.ktx.e
 import com.idan.frame.ktx.show
@@ -22,6 +23,7 @@ import com.idan.frame.ktx.show
  */
 class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
     @LayoutRes private val itemRes: Int,
+    private val onAttach: ((D?) -> Int)? = null,
     val onBindItem: (DB, D, Int, adater: BasePagingAdapter<*, *>) -> Unit
 ) :
     PagingDataAdapter<D, PagingHolder>(object : DiffUtil.ItemCallback<D>() {
@@ -34,6 +36,32 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
             return newItem === oldItem
         }
     }) {
+
+
+    /**
+     * 表格布局时，可定制样式
+     */
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        onAttach?.let {
+            val grid = recyclerView.layoutManager
+            if (grid is GridLayoutManager) {
+                grid.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//                    override fun getSpanSize(position: Int): Int {
+//                        return 1
+//                    }
+
+                    override fun getSpanSize(position: Int): Int {
+                        return if (position < itemCount) {
+                            onAttach.invoke(getItem(position))
+                        } else {
+                            1
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagingHolder {
         val mDb = DataBindingUtil.inflate<ViewDataBinding>(
@@ -51,7 +79,6 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
             onBindItem(db, getItem(position)!!, position, this)
         }
     }
-
 
     fun createFooter(): ConcatAdapter {
         addLoadStateListener { loadState ->

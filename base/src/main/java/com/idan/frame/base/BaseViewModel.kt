@@ -1,9 +1,13 @@
 package com.idan.frame.base
 
+import android.annotation.SuppressLint
 import android.util.Base64
 import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.idan.frame.APP_KEY
+import com.idan.frame.APP_SECRET
+import com.idan.frame.AppGlobal
 import com.idan.frame.http.handleExcption
 import com.idan.frame.ktx.e
 import com.idan.frame.model.*
@@ -24,6 +28,15 @@ import kotlin.random.Random
 open class BaseViewModel : ViewModel() {
 
     open val state = MutableLiveData<State>()
+
+    val map = mapOf(
+//            "app_key" to APP_KEY,
+        "app_key" to "b617866c20482d133d5de66fceb37da3",
+        "client_os_type" to "4",
+//            "nonce" to getRandomStr(32),
+        "nonce" to "b2eb45de3ecb4b9a88958942ad10b8d8",
+        "server_api_version" to "1.0.0"
+    )
 
     /**
      * 普通加载方式
@@ -61,23 +74,45 @@ open class BaseViewModel : ViewModel() {
             }
         }
 
+    /**
+     * 根据参数生成sig并返回最终请求使用的完成参数
+     */
+    fun createParams(map: Map<String, String>): MutableMap<String, String> {
+        //公共字段
+        val baseMap = mutableMapOf(
+            "app_key" to APP_KEY,
+            "client_os_type" to "2",
+            "nonce" to getRandomStr(32),
+            "timestamp" to System.currentTimeMillis().toString(),
+            "server_api_version" to "1.0.0",
+            "device_id" to getAndroidId().toByteArray().md5()
+        )
+        baseMap.putAll(map)
+        baseMap["sig"] = createSig(baseMap.toSortedMap(), APP_SECRET) ?: ""
+        baseMap.toString().e("参数----> ")
+        return baseMap
+    }
 
     fun createSig(map: MutableMap<String, String>, key: String): String? {
         if (map.isNullOrEmpty()) {
             return ""
         }
+
         val sb = StringBuffer()
-        map.forEach {
+        //排序之后再输出结果（重点在排序）
+        map.toSortedMap().forEach {
             if (sb.isNotEmpty()) {
                 sb.append("&")
             }
             sb.append("${it.key}=${it.value}")
         }
         return HmacSHA1Encrypt(toBase64(sb.toString())!!, key)!!.md5()
-//        return toBase64(sb.toString())
     }
 
-    fun getRandomStr(size:Int):String{
+    /**
+     * 生成一个指定长度的随机字符串
+     */
+    fun getRandomStr(size: Int): String {
         val str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         val sb = StringBuffer()
         for (i in 0 until size) {
@@ -141,6 +176,17 @@ open class BaseViewModel : ViewModel() {
             e.printStackTrace()
         }
         return ""
+    }
+
+    /**
+     * 获取设备Id
+     */
+    @SuppressLint("HardwareIds")
+    fun getAndroidId(): String {
+        return android.provider.Settings.Secure.getString(
+            AppGlobal.getContext().contentResolver,
+            android.provider.Settings.Secure.ANDROID_ID
+        )
     }
 
 }

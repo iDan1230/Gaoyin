@@ -2,26 +2,21 @@ package com.idan.home.ui.main
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.tabs.TabLayout
 import com.idan.frame.ID
 import com.idan.frame.TITLE
 import com.idan.frame.base.BaseActivity
-import com.idan.frame.base.BaseAdapter
 import com.idan.frame.base.BasePagingAdapter
-import com.idan.frame.base.FooterAdapter
 import com.idan.frame.ktx.e
-import com.idan.frame.ktx.show
 import com.idan.home.R
 import com.idan.home.databinding.ActivityMainBinding
+import com.idan.home.databinding.HomeItemAlbumsBinding
 import com.idan.home.databinding.HomeItemTestBinding
-import com.idan.home.logic.model.Albums
-import com.idan.home.logic.model.Category
-import com.idan.home.logic.model.Message
-import com.idan.home.logic.model.Test
+import com.idan.home.logic.model.AlbumsVO
+import com.idan.home.logic.model.CategoryVO
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -43,9 +38,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     @JvmField
     var title: String? = null
 
-    val datas = mutableListOf<Category>()
+    val datas = mutableListOf<CategoryVO>()
 
-    var category: Category? = null
+    var category: CategoryVO? = null
 
     override val mVM: MainViewModel by viewModel()
 
@@ -56,11 +51,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         "$title ------ $id".e()
 
         mVM.categorys.observe(this, Observer {
-            it.toString().e()
             mDb.tab.removeAllTabs()
-            it.forEach {
-                mDb.tab.addTab(mDb.tab.newTab().setText(it.category_name))
+            it.forEach { category ->
+                mDb.tab.addTab(mDb.tab.newTab().setText(category.category_name))
             }
+        })
+
+        mVM.tags.observe(this, Observer {
+            initLoad()
         })
 
         mDb.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -71,29 +69,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                category = datas[tab!!.position]
-//                pagingAdapter.refresh()
+                category = mVM.categorys.value?.get(tab?.position!!)
+                category?.id?.let { mVM.queryTags(it) }
+//                initLoad()
             }
         })
-//        mDb.recycler.adapter = mainAdapter
-
         mDb.root.recycler.apply {
-
+            layoutManager = GridLayoutManager(this@MainActivity, 3)
             adapter = pagingAdapter.createFooter()
-
-            lifecycleScope.launch {
-                category?.let {
-                    mVM.loadCategoryDatas(category!!).collectLatest {
-                        pagingAdapter.submitData(it)
-                    }
-                }
-            }
         }
-        //刷新
-//        pagingAdapter.refresh()
-        //重试
-//        pagingAdapter.retry()
-//        mDb.title.setTitle("主页面")
     }
 
     override fun initData() {
@@ -101,8 +85,32 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mVM.queryCategorys()
     }
 
+    /**
+     * 加载列表数据
+     * 重点：paging开始加载之后 category,已被缓存不受外部影响，所以tabLayout切换之后需要重新调用一次此方法（initLoad）
+     */
+    fun initLoad() {
+        lifecycleScope.launch {
+            mVM.queryAlbumsList(category!!.id,6).collectLatest {
+                pagingAdapter.submitData(it)
+            }
+        }
+//        mVM.queryTags(category!!.id)
+//        lifecycleScope.launch {
+//            mVM.loadCategoryDatas(category!!).collectLatest {
+//                pagingAdapter.submitData(it)
+//            }
+//        }
+    }
+
     private var pagingAdapter =
-        BasePagingAdapter<HomeItemTestBinding, Albums>(R.layout.home_item_test) { db, item, position, adapter ->
+        BasePagingAdapter<HomeItemAlbumsBinding, AlbumsVO>(R.layout.home_item_albums, { item ->
+            if (item!!.is_tag) {
+                3
+            } else {
+                1
+            }
+        }) { db, item, position, adapter ->
             db.item = item
             db.root.setOnClickListener {
                 item.is_finished = 1

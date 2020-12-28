@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.idan.frame.databinding.FooterLayoutBinding
 
-class FooterAdapter(private val adapter: BasePagingAdapter<*, *>) :
+class FooterAdapter(private val adapter: PagingDataAdapter<*, *>) :
     LoadStateAdapter<FooterAdapter.FooterHolder>() {
 
 
     class FooterHolder(private val binding: FooterLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindState(loadState: LoadState, adapter: BasePagingAdapter<*, *>) {
+        fun bindState(loadState: LoadState, adapter: PagingDataAdapter<*, *>) {
             when (loadState) {
                 is LoadState.Error -> {
                     binding.tvFooter.visibility = View.VISIBLE

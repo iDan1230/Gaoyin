@@ -11,8 +11,8 @@ data class Message(
     var compel: Int
 )
 
-data class Category(
-    val id: Long,
+data class CategoryVO(
+    val id: Int,
     val kind: String,
     val category_name: String,
     val cover_url_small: String,
@@ -21,8 +21,10 @@ data class Category(
     var order_num: Int
 )
 
+data class TagVO(val tag_name: String, val kind: String)
 
-data class Albums(
+
+data class AlbumsVO(
     val id: Long,
     val kind: String,
     val album_title: String,
@@ -31,5 +33,7 @@ data class Albums(
     val cover_url_small: String,
     val cover_url_middle: String,
     val cover_url_large: String,
-    var is_finished: Int
+    var is_finished: Int,
+    //自定义用来判断是否是tag
+    var is_tag: Boolean
 )

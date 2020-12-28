@@ -33,11 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:background="#f5f5f5"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab" />
+            app:layout_constraintTop_toBottomOf="@id/tab"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="@dimen/dp_60"

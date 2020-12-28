@@ -1,8 +1,11 @@
 apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
+apply plugin: 'kotlin-android'
 
 android {}
 
 dependencies {
     implementation project(path: ':base')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

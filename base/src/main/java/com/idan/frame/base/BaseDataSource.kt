@@ -14,9 +14,8 @@ class BaseDataSource<D : Any>(val queryPage: suspend (Int) -> PageInfo<D>) :
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, D> {
         return try {
             val currentPage = params.key ?: 1
-            "11111".e()
             val info = queryPage.invoke(currentPage)
-            "11112".e()
+            info.toString().e("PAGING_RESULT ===> ")
             val nextPage = if (info.total_page > currentPage) {
                 currentPage + 1
             } else {
