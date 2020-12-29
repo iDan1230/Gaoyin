@@ -23,7 +23,7 @@ import com.idan.frame.ktx.show
  */
 class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
     @LayoutRes private val itemRes: Int,
-    private val onAttach: ((D?) -> Int)? = null,
+    private val onAttach: ((D?,Int) -> Int)? = null,
     val onBindItem: (DB, D, Int, adater: BasePagingAdapter<*, *>) -> Unit
 ) :
     PagingDataAdapter<D, PagingHolder>(object : DiffUtil.ItemCallback<D>() {
@@ -50,9 +50,10 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
                 grid.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when {
-                            position == itemCount -> spanCount //配置footer之后，footer的位置比数据源大一
-                            position < itemCount -> onAttach.invoke(getItem(position))
-                            else -> 1
+                            //正常的Item
+                            position < itemCount -> onAttach.invoke(getItem(position),spanCount)
+                            //添加footer之后，footer对应的position等于或大于itemCount
+                            else -> spanCount
                         }
                     }
                 }

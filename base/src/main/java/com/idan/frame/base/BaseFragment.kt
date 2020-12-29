@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -16,12 +17,16 @@ import androidx.fragment.app.Fragment
  */
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
 
+
+    lateinit var mDb: DB
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var mDb = DataBindingUtil.setContentView<DB>(activity as AppCompatActivity, layoutRes())
+        mDb = DataBindingUtil.inflate<DB>(inflater, layoutRes(), container, false)
+        mDb.lifecycleOwner = this
+//        var mDb = DataBindingUtil.setContentView<DB>(activity as AppCompatActivity, layoutRes())
         onBindData(mDb)
         return mDb.root
     }
@@ -31,7 +36,8 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         initView()
         initData()
     }
-    abstract fun onBindData(mDB:DB)
+
+    abstract fun onBindData(mDB: DB)
 
     open fun initView() {}
 

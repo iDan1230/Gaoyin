@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home"
+    app:startDestination="@+id/tab_home">
+
+    <fragment
+        android:id="@+id/tab_home"
+        android:name="com.idan.home.ui.fragment.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/tab_ting"
+        android:name="com.idan.home.ui.fragment.TingFragment"
+        android:label="TingFragment"
+        tools:layout="@layout/fragment_ting" />
+<!--    <fragment-->
+    <!--        android:id="@+id/tab_find"-->
+    <!--        android:name="com.idan.home.ui.fragment.FindFragment"-->
+    <!--        android:label="FindFragment"-->
+    <!--        tools:layout="@layout/fragment_find" />-->
+    <fragment
+        android:id="@+id/tab_mine"
+        android:name="com.idan.home.ui.fragment.MineFragment"
+        android:label="MineFragment"
+        tools:layout="@layout/fragment_mine" />
+
+</navigation>

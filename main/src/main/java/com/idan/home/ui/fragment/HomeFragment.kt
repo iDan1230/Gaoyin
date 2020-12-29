@@ -1,55 +1,37 @@
-package com.idan.home.ui.main
+package com.idan.home.ui.fragment
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.tabs.TabLayout
-import com.idan.frame.ID
-import com.idan.frame.TITLE
-import com.idan.frame.base.BaseActivity
+import com.idan.frame.base.BaseFragment
 import com.idan.frame.base.BasePagingAdapter
-import com.idan.frame.ktx.e
+import com.idan.frame.ktx.show
 import com.idan.home.R
-import com.idan.home.databinding.ActivityMainBinding
+import com.idan.home.databinding.FragmentHomeBinding
 import com.idan.home.databinding.HomeItemAlbumsBinding
-import com.idan.home.databinding.HomeItemTestBinding
 import com.idan.home.logic.model.AlbumsVO
 import com.idan.home.logic.model.CategoryVO
+import com.idan.home.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-/**
- * @Author yangzhidan
- * @Date   2020/12/25
- * @Remark 主页面
- */
-@Route(path = "/main/main")
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
-
-    @Autowired(name = ID)
-    @JvmField
-    var id: Long = 0
-
-    @Autowired(name = TITLE)
-    @JvmField
-    var title: String? = null
-
-    val datas = mutableListOf<CategoryVO>()
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     var category: CategoryVO? = null
 
-    override val mVM: MainViewModel by viewModel()
+    private val mVM by sharedViewModel<HomeViewModel>()
 
-    override fun layoutRes(): Int = R.layout.activity_main
+    override fun onBindData(mDB: FragmentHomeBinding) {
+
+    }
+
+    override fun layoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
-        mDb.vm = mVM
-        "$title ------ $id".e()
-
+        super.initView()
         mVM.categorys.observe(this, Observer {
             mDb.tab.removeAllTabs()
             it.forEach { category ->
@@ -75,7 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         })
         mDb.root.recycler.apply {
-            layoutManager = GridLayoutManager(this@MainActivity, 3)
+            layoutManager = GridLayoutManager(context, 3)
             adapter = pagingAdapter.createFooter()
         }
     }
@@ -84,6 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         super.initData()
         mVM.queryCategorys()
     }
+
 
     /**
      * 加载列表数据
@@ -108,15 +91,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             R.layout.home_item_albums,
             { item, spanCount ->
                 if (item!!.is_tag) {
-                    3
+                    spanCount
                 } else {
                     1
                 }
             }) { db, item, position, adapter ->
             db.item = item
             db.root.setOnClickListener {
-                item.is_finished = 1
-                adapter.notifyItemChanged(position)
+                if (!item.is_tag) {
+                    item.is_finished = 1
+                    adapter.notifyItemChanged(position)
+                } else {
+                    "更多".show()
+                }
             }
         }
+
 }

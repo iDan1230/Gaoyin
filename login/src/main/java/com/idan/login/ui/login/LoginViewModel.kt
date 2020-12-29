@@ -16,7 +16,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : BaseViewMod
     val userLiveData = MutableLiveData<User>()
 
     fun onLogin() {
-        ARouter.getInstance().build("/main/main").navigation()
+        ARouter.getInstance().build("/main/home").navigation()
 //        launch {
 //            userLiveData.value = loginRepository.login(account.get()!!, password.get()!!)
 //        }
