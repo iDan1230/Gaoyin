@@ -3,12 +3,10 @@
     package="com.idan.home">
 
     <application>
-        <activity
-            android:name=".ui.nav.NavActivity"
-            android:label="@string/title_activity_nav"></activity>
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.paging.PagingActivity" />
         <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.album.AlbumActivity" />
     </application>
 
 </manifest>

@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="albums"
-            type="com.idan.home.logic.model.AlbumsVO" />
+            name="title"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,13 +15,13 @@
         android:layout_height="match_parent"
         tools:context=".ui.album.AlbumListFragment">
 
-        <com.idan.frame.widget.Titilebar
+        <com.idan.frame.widget.Titlebar
             android:id="@+id/tb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@{albums.album_title}" />
+            app:title="@{title}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -31,5 +31,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb" />
 
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

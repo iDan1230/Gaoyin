@@ -2,6 +2,7 @@ package com.idan.frame.base
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -23,7 +24,7 @@ import com.idan.frame.ktx.show
  */
 class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
     @LayoutRes private val itemRes: Int,
-    private val onAttach: ((D?,Int) -> Int)? = null,
+    private val onAttach: ((D?, Int) -> Int)? = null,
     val onBindItem: (DB, D, Int, adater: BasePagingAdapter<*, *>) -> Unit
 ) :
     PagingDataAdapter<D, PagingHolder>(object : DiffUtil.ItemCallback<D>() {
@@ -37,6 +38,7 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
         }
     }) {
 
+    var onClickItem: ((Int)->Unit)? = null
 
     /**
      * 表格布局时，可定制样式
@@ -51,7 +53,7 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
                     override fun getSpanSize(position: Int): Int {
                         return when {
                             //正常的Item
-                            position < itemCount -> onAttach.invoke(getItem(position),spanCount)
+                            position < itemCount -> onAttach.invoke(getItem(position), spanCount)
                             //添加footer之后，footer对应的position等于或大于itemCount
                             else -> spanCount
                         }
@@ -75,6 +77,11 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
         val db = DataBindingUtil.getBinding<DB>(holder.itemView)
         db?.let { db ->
             onBindItem(db, getItem(position)!!, position, this)
+        }
+        holder.itemView.setOnClickListener {
+            onClickItem?.let {
+                it.invoke(position)
+            }
         }
     }
 

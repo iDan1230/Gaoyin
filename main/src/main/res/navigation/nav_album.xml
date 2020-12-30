@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_album"
+    app:startDestination="@id/albumFragment">
+
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.idan.home.ui.fragment.AlbumFragment"
+        android:label="AlbumFragment" />
+    <fragment
+        android:id="@+id/albumListFragment"
+        android:name="com.idan.home.ui.album.AlbumListFragment"
+        android:label="AlbumListFragment">
+        <action
+            android:id="@+id/to_albuminfo"
+            app:destination="@id/albumFragment" />
+    </fragment>
+
+</navigation>

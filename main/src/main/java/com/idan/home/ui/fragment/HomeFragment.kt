@@ -2,6 +2,7 @@ package com.idan.home.ui.fragment
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.idan.frame.base.BaseFragment
@@ -104,6 +105,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 } else {
                     "更多".show()
                 }
+            }
+        }.apply {
+            onClickItem = {
+                it.show()
+                findNavController().navigate(R.id.home_to_album)
             }
         }
 

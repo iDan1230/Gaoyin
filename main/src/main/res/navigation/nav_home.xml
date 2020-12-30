@@ -9,13 +9,19 @@
         android:id="@+id/tab_home"
         android:name="com.idan.home.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/home_to_album"
+            app:destination="@id/ac_album" />
+
+    </fragment>
     <fragment
         android:id="@+id/tab_ting"
         android:name="com.idan.home.ui.fragment.TingFragment"
         android:label="TingFragment"
         tools:layout="@layout/fragment_ting" />
-<!--    <fragment-->
+    <!--    <fragment-->
     <!--        android:id="@+id/tab_find"-->
     <!--        android:name="com.idan.home.ui.fragment.FindFragment"-->
     <!--        android:label="FindFragment"-->
@@ -25,5 +31,11 @@
         android:name="com.idan.home.ui.fragment.MineFragment"
         android:label="MineFragment"
         tools:layout="@layout/fragment_mine" />
+
+    <activity
+        android:id="@+id/ac_album"
+        android:name="com.idan.home.ui.album.AlbumActivity"
+        android:label="AlbumActivity"
+        tools:layout="@layout/activity_album" />
 
 </navigation>

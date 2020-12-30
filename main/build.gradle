@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
-apply plugin: 'kotlin-android'
 
 android {}
 
