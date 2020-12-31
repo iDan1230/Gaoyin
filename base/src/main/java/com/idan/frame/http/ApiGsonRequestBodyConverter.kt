@@ -11,9 +11,7 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import java.nio.charset.Charset
 
-/**
- * Created by way on 17/1/17.
- */
+
  class ApiGsonRequestBodyConverter<T>(
      val gson: Gson,
      val adapter: TypeAdapter<T>

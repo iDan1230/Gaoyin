@@ -16,7 +16,6 @@ class MainRepository(private val loginService: MainService) {
     suspend fun queryMessage(userId: Long, page: Int): PageInfo<Message> =
         loginService.queryMessages(userId, page, 5)
 
-
     suspend fun queryCategories(map: MutableMap<String, String>): MutableList<CategoryVO> =
         loginService.queryCategories(map)
 
@@ -25,6 +24,5 @@ class MainRepository(private val loginService: MainService) {
 
     suspend fun queryAlbumsList(map: MutableMap<String, String>): PageInfo<AlbumsVO> =
         loginService.queryAlbumsList(map)
-
 
 }
