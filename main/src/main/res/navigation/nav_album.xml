@@ -8,6 +8,7 @@
         android:id="@+id/albumFragment"
         android:name="com.idan.home.ui.fragment.AlbumFragment"
         android:label="AlbumFragment" />
+
     <fragment
         android:id="@+id/albumListFragment"
         android:name="com.idan.home.ui.album.AlbumListFragment"

@@ -38,7 +38,7 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
         }
     }) {
 
-    var onClickItem: ((Int)->Unit)? = null
+    var onClickItem: ((Int,D)->Unit)? = null
 
     /**
      * 表格布局时，可定制样式
@@ -80,7 +80,7 @@ class BasePagingAdapter<DB : ViewDataBinding, D : Any>(
         }
         holder.itemView.setOnClickListener {
             onClickItem?.let {
-                it.invoke(position)
+                it.invoke(position,getItem(position)!!)
             }
         }
     }

@@ -1,5 +1,8 @@
 package com.idan.home.logic.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class Test(var title: String)
 
 data class Message(
@@ -24,6 +27,7 @@ data class CategoryVO(
 data class TagVO(val tag_name: String, val kind: String)
 
 
+@Parcelize
 data class AlbumsVO(
     val id: Long,
     val kind: String,
@@ -36,4 +40,4 @@ data class AlbumsVO(
     var is_finished: Int,
     //自定义用来判断是否是tag
     var is_tag: Boolean
-)
+):Parcelable

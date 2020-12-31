@@ -2,7 +2,9 @@ package com.idan.home.ui.album
 
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
+import com.idan.frame.ITEM
 import com.idan.frame.base.BaseFragment
+import com.idan.frame.ktx.e
 import com.idan.home.BR
 import com.idan.home.R
 import com.idan.home.databinding.FragmentAlbumListBinding
@@ -19,7 +21,7 @@ class AlbumListFragment : BaseFragment<FragmentAlbumListBinding>() {
 
     private val mVM: MainViewModel by sharedViewModel()
 
-    var title = ObservableField("这是title")
+    var title = ObservableField("专辑列表")
 
     override fun layoutRes(): Int = R.layout.fragment_album_list
 
@@ -29,10 +31,7 @@ class AlbumListFragment : BaseFragment<FragmentAlbumListBinding>() {
 
     override fun initView() {
         super.initView()
-        mDb.btn.setOnClickListener {
-            title.set("变一下")
-            title.notifyPropertyChanged(BR.title)
-        }
+
     }
 
 

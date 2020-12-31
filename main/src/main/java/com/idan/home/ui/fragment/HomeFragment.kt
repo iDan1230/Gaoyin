@@ -1,10 +1,14 @@
 package com.idan.home.ui.fragment
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.idan.frame.ITEM
+import com.idan.frame.TYPE
 import com.idan.frame.base.BaseFragment
 import com.idan.frame.base.BasePagingAdapter
 import com.idan.frame.ktx.show
@@ -107,9 +111,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         }.apply {
-            onClickItem = {
-                it.show()
-                findNavController().navigate(R.id.home_to_album)
+            onClickItem = { it, item ->
+                findNavController().navigate(R.id.home_to_album, Bundle().apply {
+                    //1：列表 0：专辑详情
+                    putInt(TYPE, if (item.is_tag) 1 else 0)
+                    putParcelable(ITEM, item)
+                })
             }
         }
 

@@ -24,13 +24,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     dataBinding {
         enabled true
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -91,7 +94,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.5'
     //endregion
 
-    //region koin(依赖注入)
+    //region koin
     implementation "org.koin:koin-androidx-scope:2.0.1"
     implementation "org.koin:koin-androidx-viewmodel:2.0.1"
     implementation "org.koin:koin-androidx-ext:2.0.1"
