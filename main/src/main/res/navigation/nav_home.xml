@@ -32,6 +32,21 @@
         android:label="MineFragment"
         tools:layout="@layout/fragment_mine" />
 
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.idan.home.ui.fragment.AlbumFragment"
+        android:label="AlbumFragment" />
+
+    <fragment
+        android:id="@+id/albumListFragment"
+        android:name="com.idan.home.ui.fragment.AlbumListFragment"
+        android:label="AlbumListFragment">
+        <action
+            android:id="@+id/to_albuminfo"
+            app:destination="@id/albumFragment" />
+    </fragment>
+
+
     <activity
         android:id="@+id/ac_album"
         android:name="com.idan.home.ui.album.AlbumActivity"

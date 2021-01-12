@@ -7,6 +7,8 @@ import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.idan.frame.DATA
+import com.idan.frame.ID
 import com.idan.frame.ITEM
 import com.idan.frame.TYPE
 import com.idan.frame.base.BaseFragment
@@ -115,6 +117,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 findNavController().navigate(R.id.home_to_album, Bundle().apply {
                     //1：列表 0：专辑详情
                     putInt(TYPE, if (item.is_tag) 1 else 0)
+                    //分类id
+                    putInt(ID,category!!.id)
+                    //tag
                     putParcelable(ITEM, item)
                 })
             }

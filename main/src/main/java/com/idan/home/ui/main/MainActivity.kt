@@ -95,12 +95,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 pagingAdapter.submitData(it)
             }
         }
-//        mVM.queryTags(category!!.id)
-//        lifecycleScope.launch {
-//            mVM.loadCategoryDatas(category!!).collectLatest {
-//                pagingAdapter.submitData(it)
-//            }
-//        }
     }
 
     private var pagingAdapter =

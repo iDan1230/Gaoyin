@@ -64,7 +64,7 @@ class MainViewModel(private val mainRepository: MainRepository) : BaseViewModel(
         }
     }
 
-    fun queryAlbumsList(categoryId: Int, pageSize: Int) = flowData {
+    fun queryAlbumsList(categoryId: Int, pageSize: Int = 20, tagName: String? = null) = flowData {
         val map = mutableMapOf(
             "category_id" to categoryId.toString(),
             "calc_dimension" to "1",
@@ -72,13 +72,30 @@ class MainViewModel(private val mainRepository: MainRepository) : BaseViewModel(
             "count" to pageSize.toString(),
             "contains_paid" to "false"
         )
+        tagName?.apply {
+            map["tag_name"] = tagName
+        }
         tags.value?.apply {
             map["tag_name"] = get(it).tag_name
         }
 
         val result = mainRepository.queryAlbumsList(createParams(map))
         if (pageSize == 6) {
-            result.rows.add(0, AlbumsVO(categoryId.toLong(), "", map["tag_name"] ?: "", "", "", "", "", "", 0,true))
+            result.rows.add(
+                0,
+                AlbumsVO(
+                    categoryId.toLong(),
+                    "",
+                    map["tag_name"] ?: "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    0,
+                    true
+                )
+            )
         }
         result
     }
@@ -96,7 +113,18 @@ class MainViewModel(private val mainRepository: MainRepository) : BaseViewModel(
         )
         category.id.toString().e("分类ID: ")
         mainRepository.queryAlbumsList(createParams(map))
+    }
 
+    fun queryAlbums(categoryId: Int, tagName: String) = flowData {
+        val map = mutableMapOf(
+            "category_id" to categoryId.toString(),
+            "calc_dimension" to "1",
+            "page" to "1",
+            "count" to "20",
+            "contains_paid" to "false",
+            "tag_name" to tagName
+        )
+        mainRepository.queryAlbumsList(createParams(map))
     }
 
 }

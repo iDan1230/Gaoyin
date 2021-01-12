@@ -7,6 +7,11 @@ import com.idan.home.R
 import com.idan.home.databinding.FragmentAlbumBinding
 import com.idan.home.logic.model.AlbumsVO
 
+/**
+ * @Creator yangzhidan
+ * @Date    2021/1/12/0012
+ * @Remark  专辑详情
+ */
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>() {
 
     override fun onBindData(mDB: FragmentAlbumBinding) {

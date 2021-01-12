@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.album.AlbumListFragment">
+        tools:context=".ui.fragment.AlbumListFragment">
 
         <com.idan.frame.widget.Titlebar
             android:id="@+id/tb"
@@ -27,6 +27,8 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
+            android:background="@color/c_f6f6f6"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb" />

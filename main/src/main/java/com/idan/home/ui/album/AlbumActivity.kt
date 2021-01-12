@@ -27,6 +27,7 @@ class AlbumActivity : BaseActivity<ActivityAlbumBinding, AlbumViewModel>() {
 
     var type: Int = 0
     var item: AlbumsVO? = null
+    var categoryId:Int = 0
     override val mVM: AlbumViewModel by viewModel()
 
     override fun layoutRes(): Int = R.layout.activity_album
@@ -37,17 +38,19 @@ class AlbumActivity : BaseActivity<ActivityAlbumBinding, AlbumViewModel>() {
 //        val bundle = intent.extras
 //        bundle?.let {
             type = intent.getIntExtra(TYPE,0)
+            categoryId = intent.getIntExtra(ID,0)
             item = intent.getParcelableExtra(ITEM)
-            item.toString().e()
+
 //        }
 
         findNavController(R.id.navigate_album).apply {
-            setGraph(navInflater.inflate(R.navigation.nav_album).apply {
+            setGraph(navInflater.inflate(R.navigation.nav_home).apply {
                 startDestination = when (type) {
                     1 -> R.id.albumListFragment
                     else -> R.id.albumFragment
                 }
             },Bundle().apply {
+                putInt(ID,categoryId)
                 putParcelable(ITEM,item)
             })
 //            graph = navInflater.inflate(R.navigation.nav_album).apply {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.idan.home.logic.model.AlbumsVO" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/c_fff"
+        android:padding="@dimen/dp_10">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_90"
+            android:background="@color/c_f6f6f6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@{item.cover_url_small}" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:textColor="@color/c_333"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_14"
+            tools:text="阿斯蒂芬斯蒂芬斯蒂芬斯蒂芬斯蒂芬是非得失胜多负少的方式"
+            android:text="@{item.album_title}"
+            app:layout_constraintLeft_toRightOf="@id/iv_pic"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_pic" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_tags"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textColor="@color/c_333"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/sp_12"
+            android:text="@{item.album_tags}"
+            android:layout_marginTop="@dimen/dp_3"
+            tools:text="收到回复可见安徽发空间上的房价快速的恢复健康和速度快"
+            app:layout_constraintLeft_toRightOf="@id/iv_pic"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_3"
+            android:textColor="@color/c_999"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="第三节福利卡积分洛杉矶的法律会计师里看风景时考虑到房价上来看等级分类考试等级分类考试等级分类时代峻峰"
+            android:textSize="@dimen/sp_12"
+            android:text="@{item.album_intro}"
+            app:layout_constraintLeft_toRightOf="@id/iv_pic"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_tags" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
